@@ -140,10 +140,10 @@ class TestPlan(unittest.TestCase):
         bastion_step = Step(bastion, fn)
         plan = build_plan(description="Test", steps=[vpc_step, bastion_step])
 
-        with self.assertRaises(ValueError):
-            plan.execute()
+        plan.execute()
 
         self.assertEquals(calls, ['namespace-vpc.1'])
+        self.assertEquals(vpc_step.status, FAILED)
 
     def test_execute_plan_skipped(self):
         vpc = Stack(
